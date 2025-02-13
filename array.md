@@ -167,5 +167,201 @@ for循环表示 终止位置，如果初始位置就需要往后 O(n2)了
 
 时间复杂度O(n)，因为wihile(sum >= s)是k，不是n
 
+击败了 98%但是内存占用较多，仅击败12%
+
 ```python
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        """滑动窗口"""
+        l = 0
+        min_len = 1e6
+        n = len(nums)
+        sum = 0
+
+        for r in range(n):
+            sum += nums[r]
+            while(sum >= target):
+                min_len = min(min_len,r-l+1) #长度是 r-l+1
+                sum -= nums[l]
+                l+=1
+        if min_len == 1e6:
+            return 0
+        else:
+            return min_len
+```
+
+
+
+## 59 螺旋矩阵：
+
+循环不变量，二分法的不变量是区间的定义，而本题螺旋矩阵的不变量是循环尺寸的含义是 max-circle
+
+* 每圈循环的方式也不变
+
+```python
+class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
+        """模拟"""
+        res = [[0]*n for _ in range(n)]
+        circle = n//2  #要画多少圈 
+        print(f"circle is {circle}")
+        start_row,start_col = 0,0  #起始点需要记录
+        cnt = 1
+        for offset in range(1,circle+1):
+            for i in range(start_col,n-offset):
+                res[start_row][i] = cnt 
+                cnt += 1  
+                # print(f"right: {res},offset is {offset},i is {i}")
+            for i in range(start_row,n-offset):
+                res[i][n-offset] = cnt 
+                cnt += 1
+                # print(f"down: {res},offset is {offset},i is {i}")
+            for i in range(n-offset,start_col,-1):
+                res[n-offset][i] = cnt 
+                cnt += 1
+                # print(f"left: {res},offset is {offset},i is {i}")
+            for i in range(n-offset,start_row,-1):
+                res[i][start_col] = cnt 
+                cnt += 1
+                # print(f"up: {res},offset is {offset},i is {i}")
+            #更新起点
+            start_col += 1
+            start_row += 1 
+        #奇数填充中心点，偶数完成循环即可
+        if n%2 != 0:
+            mid = n//2
+            res[mid][mid] = cnt
+        return res
+```
+
+耗时0ms，击败100%
+
+
+
+## 58 carl区间和：
+
+前缀和思想：
+
+区间和多次查询，复杂度过高
+
+
+
+* 要求解的是 \[a,b]左闭右闭，因此sum = presum\[b] - presum\[a-1]，同时if a == 0,防止-1越界
+
+```python
+import sys
+n = int(input())
+data = [0] * n
+for i in range(n):
+    data[i] = int(input())
+# print(data)
+
+
+presum = [0] * n
+presum[0] = data[0]
+for i in range(1,n):
+    presum[i] = data[i] + presum[i-1]
+
+# print(f"presum is {presum}")
+    
+for line in sys.stdin:
+    a,b = map(int,line.strip().split())
+    # print(f"a is {a},b is {b}")
+    if a == 0:
+        print(presum[b])
+    else:
+        print(presum[b]-presum[a-1])
+```
+
+
+
+## 44 开发商购买土地
+
+单纯的区间求和问题，不过是二维矩阵的纵向和横向都求和
+
+```python
+#直接把全部读进来了，挺抽象的
+import sys
+input = sys.stdin.read #这种读法，会读到文件结束EOF
+data = input().split()
+n = int(data[0])
+m = int(data[1])
+
+cube = []
+sum = 0 #全部总和
+idx = 2 #从下标为2开始
+for i in range(n):
+    row = []
+    for j in range(m):
+        num = int(data[idx])
+        idx += 1
+        row.append(num)
+        sum += num
+    cube.append(row)
+# print(f"cube is {cube}")
+
+#行的和
+horizontal = [0] * n
+for i in range(n):
+    for j in range(m):
+        horizontal[i] += cube[i][j]
+#列的和
+vertical = [0] * m
+for j in range(m):
+    for i in range(n):
+        vertical[j] += cube[i][j]
+
+#求解一刀切的结果
+result = float('inf')
+horizontalCut = 0
+for i in range(n):
+    horizontalCut += horizontal[i]
+    result = min(result, abs((sum - horizontalCut)-horizontalCut))
+    
+verticalCut = 0
+for i in range(m):
+    verticalCut += vertical[i]
+    result = min(result, abs((sum - verticalCut)-verticalCut))
+    
+print(result)
+```
+
+
+
+
+
+
+
+# 基础技巧：
+
+## for和while的区别
+
+* for循环自动会给i +=1，但是for循环一旦进入，其上届不会变，不像while能够until
+
+
+
+## 简单但是慢的操作：
+
+采用提前申请好数组并用下标访问，能大幅提升速度
+
+* append(value)
+
+* insert(index,value)
+
+
+
+
+
+
+
+## cpp的输入输出
+
+```python
+#输入
+scanf("%d", &vec[i]);
+cin >> vec[i];
+
+#输出
+printf("%d\n", sum);
+cout << sum << endl;
 ```
