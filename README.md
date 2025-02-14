@@ -1,7 +1,7 @@
 ## Content
-[1.Array 2.12 - 2.13](./array.md)
+1. [Array 2.12 - 2.13](./array.md)
 
-[2. ]
+2. [ListNode 2.14](./ListNode.md)
 
 
 ## Note
