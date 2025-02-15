@@ -2,33 +2,32 @@
 
 1. 做链表题一定要画图：
 
-* 普通标准链表
+- 普通标准链表
 
-![](https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=Y2E2YTVhMDdlNGVlOTMwMmE0YmM2MDcwODY0NGJjODFfVkpiRnNuVFl4Q1NUeExFSmZQYzBBVjVJZEs5cmEwR3ZfVG9rZW46V1ZzWWJSamp3b1hmTjR4TGdYY2NjZFgxbkxnXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA)
+<iframe src="https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=Y2E2YTVhMDdlNGVlOTMwMmE0YmM2MDcwODY0NGJjODFfVkpiRnNuVFl4Q1NUeExFSmZQYzBBVjVJZEs5cmEwR3ZfVG9rZW46V1ZzWWJSamp3b1hmTjR4TGdYY2NjZFgxbkxnXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA"/>
 
-* 虚拟头节点
+- 虚拟头节点
 
-![](https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=NDYwMjc0ZGJmNTVhYWUzYzEwNzhjNmNmY2M5ZGRkZTRfa01YRmplT29GRjJrTmVnUHVJNFpHSkxkdzdJaG8wWlZfVG9rZW46UHRhWGJ5eG5Qb2FoWFh4Um5oZmM2dU5SbkhlXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA)
+<iframe src="https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=NDYwMjc0ZGJmNTVhYWUzYzEwNzhjNmNmY2M5ZGRkZTRfa01YRmplT29GRjJrTmVnUHVJNFpHSkxkdzdJaG8wWlZfVG9rZW46UHRhWGJ5eG5Qb2FoWFh4Um5oZmM2dU5SbkhlXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA"/>
 
 
 
-* 边界条件确实是难点：
+- 边界条件确实是难点：
 
-- while的终止条件要保证：最后一次操作直到结束都不会None.next/val&#x20;
+- while的终止条件要保证：最后一次操作直到结束都不会None.next/val 
 
   1. `While cur.next and cur.next.next:`
 
 - while内部：
 
   1. 放置tmp保留节点
-
   2. 交换
-
   3. 移动current
 
 
+<br/>
 
-* 链表非常简单的debug方式：
+- 链表非常简单的debug方式：
 
 ```python
 print(f"dummy_head.next is {dummy_head.next}")
@@ -42,19 +41,19 @@ print(f"dummy_head.next is {dummy_head.next}")
 
 ## 链表基础
 
-* head一直都是空的
+- head一直都是空的
 
-  * 删除头节点的时候用 `pre_dummy_head = ListNode(next = head) `
+  - 删除头节点的时候用 `pre_dummy_head = ListNode(next = head)` 
+  - 遍历时候用 `current = dummy_head.next`
 
-  * 遍历时候用 `current = dummy_head.next`
 
-![](https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=YjUzZmNkNTlmM2NlYzY5YzJkOTA1Y2Q2NzUwNmQyOWFfUmt2dFJXbjNLYjhyNXU5c1JDejd1cGxjWTlycHp4enZfVG9rZW46UmttVmJVcnhZb1pidnV4Q2dpRmNqTlhpbnJoXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA)
+<iframe src="https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=YjUzZmNkNTlmM2NlYzY5YzJkOTA1Y2Q2NzUwNmQyOWFfUmt2dFJXbjNLYjhyNXU5c1JDejd1cGxjWTlycHp4enZfVG9rZW46UmttVmJVcnhZb1pidnV4Q2dpRmNqTlhpbnJoXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA"/>
 
 
 
 ### 链表操作
 
-* 定义：
+- 定义：
 
 ```python
 #单向，包含值和指针
@@ -64,7 +63,7 @@ class ListNode:
         self.next = next
 ```
 
-* 添加
+- 添加
 
 ```python
 A -> B -> C
@@ -72,11 +71,11 @@ A -> B -> C
 A -> D -> B -> C
 ```
 
-* 删除
+- 删除
 
-  * 前一个节点直接指向他后面的跳过他
+  - 前一个节点直接指向他后面的跳过他
+  - 删除头节点，将头节点往后移动一位
 
-  * 删除头节点，将头节点往后移动一位
 
 
 
@@ -84,11 +83,10 @@ python有内存回收机制，不用手动释放
 
 ### 性能分析：
 
-* 链表更适合插入，长度不定
+- 链表更适合插入，长度不定
+- 数组更适合查询，长度固定
 
-* 数组更适合查询，长度固定
-
-![](https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=NThkNzRhYzYzNjIyMzAyOWFlNTUxYjQ2NGVhMTk3Y2ZfQlVJWUtzTVhhQ3JlUWtzMkhQNkppaFhQdkFmbmd4RkJfVG9rZW46S2EzamJhQlpzb1dSRDh4N3c0R2NMNTZ6bnZnXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA)
+<iframe src="https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=NThkNzRhYzYzNjIyMzAyOWFlNTUxYjQ2NGVhMTk3Y2ZfQlVJWUtzTVhhQ3JlUWtzMkhQNkppaFhQdkFmbmd4RkJfVG9rZW46S2EzamJhQlpzb1dSRDh4N3c0R2NMNTZ6bnZnXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA"/>
 
 
 
@@ -123,11 +121,9 @@ class Solution:
 
 
 
-* get时候` for i in range(index)`
-
-* AddTail时候 `while current.next !=None:`
-
-* AddAtIndex和Delete时候 `for i in range(index -1 ):`
+- get时候 `for i in range(index)`
+- AddTail时候 `while current.next !=None:`
+- AddAtIndex和Delete时候 `for i in range(index -1 ):`
 
 ```python
 class ListNode:
@@ -243,7 +239,7 @@ class Solution:
 
 
 
-* 普通：
+- 普通：
 
 ```python
 class Solution:
@@ -269,7 +265,7 @@ class Solution:
 
 
 
-* 递归版本：
+- 递归版本：
 
 ```python
 #回来再写
@@ -279,7 +275,7 @@ class Solution:
 
 ## 19 删除链表中倒数第N个节点：
 
-![](https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=YTFlMTcwODUxMmFlNzY2ZWYyMWQ3MTE0MGJkMTBiMDdfdFlaTU9PeVN0ZHpuQmtWbnViOVNpQWczRGtCWDRDOFpfVG9rZW46T1l4SmJKNkJVb0h6RnF4cWVJUWNVZHJlbkloXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA)
+<iframe src="https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=YTFlMTcwODUxMmFlNzY2ZWYyMWQ3MTE0MGJkMTBiMDdfdFlaTU9PeVN0ZHpuQmtWbnViOVNpQWczRGtCWDRDOFpfVG9rZW46T1l4SmJKNkJVb0h6RnF4cWVJUWNVZHJlbkloXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA"/>
 
 ```python
 # Definition for singly-linked list.
@@ -357,7 +353,7 @@ class Solution:
 
 
 
-## 142 环形链表2&#x20;
+## 142 环形链表2 
 
 ```python
 class Solution:
@@ -394,5 +390,10 @@ class Solution:
         return s
 ```
 
-![](https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=Nzc1YjBlY2NmZDRjMzcwYmVmMzFlM2E1ZGYyMzljNTVfMVVhR2FtYUpMZXByaFFDSlRYdktjV3FuNmlPRDdLQW5fVG9rZW46R2s5TGI4TFJrb2VkMmp4ZHZXbWNzZlFsbjdlXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA)
+<iframe src="https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=Nzc1YjBlY2NmZDRjMzcwYmVmMzFlM2E1ZGYyMzljNTVfMVVhR2FtYUpMZXByaFFDSlRYdktjV3FuNmlPRDdLQW5fVG9rZW46R2s5TGI4TFJrb2VkMmp4ZHZXbWNzZlFsbjdlXzE3Mzk2MzIzMzk6MTczOTYzNTkzOV9WNA"/>
 
+## 题目的简单总结
+1. 两两交换：init_tmp > swap >go
+2. 删除倒数N点: 后对齐
+3. 链表相交: 后对齐与指针相等
+4. 环形链表：k = n + ab 且 s = nb
