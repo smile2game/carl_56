@@ -3,6 +3,7 @@
 1. [Array 2.12 - 2.13](./array.md)
 2. [Linked_List 2.14 - 2.15](./Linked_List.md)
 3. [HashTable 2.17 - 2.18](./HashTable.md)
+4. [String 2.19-2.20](./String.md)
 # Note
 
 本人刷题的笔记，重写了python版本(cpp随后二刷)的代码随想录，解法中有详细注释和debug信息便于模拟。这也是本仓库的价值所在。
