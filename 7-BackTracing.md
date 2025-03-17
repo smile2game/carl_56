@@ -47,7 +47,7 @@ def bt(参数)：
 
 类似深度优先搜索，但是有回退，接着深度，并非二叉树单纯的先后序，更像是 多叉树的 深度优先搜索&#x20;
 
-![](https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=N2M4ZjNiNDJjN2JlN2Y5M2Y2YWFkZWZkMGM5ZjFhMjZfYjlkZ3Z6a1FPdGVFOTc4UWtWNjdabkNEUGNMM1RSVDNfVG9rZW46Tmswb2JtMVNkb2ttUm94WGRPSWNrOWljbmw1XzE3NDE2MjU4NjQ6MTc0MTYyOTQ2NF9WNA)
+![](https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=NGMxMGY2YTYyOTFmMzk2ODNlMzk0NTJjNzhjZTUwOTFfRDNpWEdZMDRFd3BnZXNuSGtycmY2NmpteHJQUkNpU0NfVG9rZW46Tmswb2JtMVNkb2ttUm94WGRPSWNrOWljbmw1XzE3NDIyMjAyMDQ6MTc0MjIyMzgwNF9WNA)
 
 
 
@@ -282,7 +282,7 @@ def question(s):
 
 ### 131 分割回文串&#x20;
 
-![](https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=NThhMjgwYTI4MTA2NzM1OTBhMzU4NGJiMGVjYWZlYTNfNzcxSWFNWE84TzJIYW1wRDU2bFRlZWJsZk5qeTQ5ZGdfVG9rZW46Sk9vamJob0phb2I0bnh4NHlGT2M5cDlLbjAyXzE3NDE2MjU4NjQ6MTc0MTYyOTQ2NF9WNA)
+![](https://o0rjrextel0.feishu.cn/space/api/box/stream/download/asynccode/?code=YjQ0MjA2YWI2OGYxMGNhNjljOGM5ODk5YTEzZWEwNzFfRnRJVGtPdENjMHB5OHlPR0ZwT1RFR3pkaTJxajRuTlpfVG9rZW46Sk9vamJob0phb2I0bnh4NHlGT2M5cDlLbjAyXzE3NDIyMjAyMDQ6MTc0MjIyMzgwNF9WNA)
 
 * 字符串的截取也是 左开右闭的&#x20;
 
@@ -321,6 +321,47 @@ class Solution:
 ### 93 复原ip地址
 
 ```python
+class Solution:
+    def is_valid(self,s,start,end):
+        if start > end: return False
+        if s[start] == '0' and start != end: return False 
+        num = 0
+        for i in range(start,end+1):
+            # print(f"is_valid? s[i] is {s[i]}")
+            num = num*10 + int(s[i])
+            if num > 255: return False
+        return True
+    
+    def bt(self,s,startindex,path,res,point_num):
+        #终止条件 
+        if point_num == 3: 
+            print(f"point_num is {point_num},path is {path}")
+            if self.is_valid(s,startindex,len(s)-1): #判断最后一段，如果也符合，就加进去
+                print(f"符合,s[startindex:] is {s[startindex:]}")
+                path += s[startindex:]
+                res.append(path)
+            return 
+
+        #单层处理 
+        for i in range(startindex,len(s)): #(startindex,len(s))
+            #子串是 [startindex,i]
+            if self.is_valid(s,startindex,i): #
+                print(f"前三个子串符合,s[startindex:i+1] is {s[startindex:i+1]}")
+                sub = s[startindex:i+1]
+                self.bt(s,i+1,path + sub + '.',res,point_num+1) #步进i+1
+            else:
+                break
+
+    def restoreIpAddresses(self, s: str) -> List[str]:
+        """ 
+        无前导0, 255以内
+        优先用print来debug 
+        下标 要背下来
+        """
+        res = []
+        self.bt(s,0,"",res,0)
+        return res
+
 ```
 
 
@@ -331,11 +372,171 @@ class Solution:
 
 ## 子集
 
+### 78 子集
+
+```python
+class Solution:
+    def __init__(self):
+        self.res = []
+        self.path = []
+    def bt(self,nums,startindex):
+        self.res.append(self.path[:]) #全收集
+        #终止条件
+        if startindex >= len(nums):
+            return 
+        for i in range(startindex,len(nums)):
+            self.path.append(nums[i])
+            self.bt(nums,i+1) #什么时候是 i+1是层序遍历吧，
+            self.path.pop()
+
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        self.bt(nums,0)
+        return self.res
+```
+
+### 90 子集 2 去重
+
+树枝允许重复,树层去重
+
+for中循环:&#x20;
+
+* 不是树枝重复（那就是树层了）
+
+* 重复
+
+```python
+class Solution:
+    def __init__(self):
+        self.res = []
+        self.path = []
+    def bt(self,nums,startindex):
+        self.res.append(self.path[:]) #全收集
+        #终止条件
+        if startindex >= len(nums):
+            return 
+        for i in range(startindex,len(nums)):
+            if i > 0 and nums[i-1] == nums[i] and not self.used[i-1]: #重复了，而且上个树枝没用
+                continue
+            self.path.append(nums[i])
+            self.used[i] = True
+            self.bt(nums,i+1) #什么时候是 i+1是层序遍历吧，
+            self.path.pop()
+            self.used[i] = False
+
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        self.used = [False] * len(nums)
+        nums.sort()
+        self.bt(nums,0)
+        return self.res
+```
+
+
+
+### 491 递增子序列
+
+```python
+class Solution:
+    def __init__(self): 
+        self.path = []
+        self.res = []
+
+    def bt(self,nums,startindex):
+        if len(self.path) > 1:
+            self.res.append(self.path[:])
+        
+        uset = set()
+        for i in range(startindex,len(nums)):
+            if (self.path and self.path[-1] > nums[i])or nums[i] in uset:
+                continue
+            uset.add(nums[i])
+            self.path.append(nums[i])
+            self.bt(nums,i+1)
+            self.path.pop()
+
+    def findSubsequences(self, nums: List[int]) -> List[List[int]]:
+        self.bt(nums,0)
+        return self.res
+```
+
+
+
+## 排列：
+
+### 46 全排列
+
+给定元素没有重复，无需去重
+
+```python
+class Solution:
+    def __init__(self):
+        self.res = []
+        self.path = []
+        
+    def bt(self,nums):
+        #终止条件
+        if len(self.path) == len(nums):
+            self.res.append(self.path[:]) 
+            return 
+
+        for i in range(len(nums)):
+            if self.used[i]: 
+                continue
+            self.used[i] = True
+            self.path.append(nums[i])
+            self.bt(nums) #什么时候是 i+1是层序遍历吧，
+            self.path.pop()
+            self.used[i] = False
+            
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        self.used = [False]*len(nums)
+        self.bt(nums)
+        return self.res
+```
+
+
+
+
+
+### 47 全排列2&#x20;
+
+必须要记得排序，去重直接用set最方便了
+
+`nums[i] in uset`
+
+```python
+class Solution:
+    def __init__(self):
+        self.res = []
+        self.path = []
+        
+    def bt(self,nums):
+        #终止条件
+        if len(self.path) == len(nums):
+            self.res.append(self.path[:]) 
+            return 
+        uset = set()
+        for i in range(len(nums)):
+            if (i > 0 and nums[i] == nums[i-1] and nums[i] in uset) or self.used[i]: 
+                continue
+            self.used[i] = True
+            uset.add(nums[i])
+            self.path.append(nums[i])
+            self.bt(nums) #什么时候是 i+1是层序遍历吧，
+            self.path.pop()
+            self.used[i] = False
+
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        self.used = [False]*len(nums)
+        nums.sort()
+        self.bt(nums)
+        return self.res
+```
 
 
 
 
 
 
-## 棋盘:
+
+## 棋盘(跳过):
 
